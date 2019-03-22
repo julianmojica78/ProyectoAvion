@@ -1,5 +1,7 @@
 package com.mycompany.proyectoexepciones;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -73,9 +75,9 @@ public class Persona {
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
-    
-    
-    
+        public Date getFechaNac(){
+        return fechaNacimiento;
+    }   
     
     
 }

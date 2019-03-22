@@ -11,6 +11,7 @@ public class Avion {
     protected String avion1 [][];
     protected float precio;
     protected float total;
+    int bandera;
 
     public Avion(String[][] avion1, float precio) {
         this.avion1 = avion1;
