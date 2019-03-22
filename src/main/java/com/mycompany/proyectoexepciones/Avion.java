@@ -8,19 +8,38 @@ import java.util.Map;
  * @author David
  */
 public class Avion {
-    private List<Asiento> asiento;
+    protected String avion1 [][];
+    protected float precio;
+    protected float total;
 
-    public Avion(List<Asiento> asiento) {
-        this.asiento = asiento;
+    public Avion(String[][] avion1, float precio) {
+        this.avion1 = avion1;
+        this.precio = precio;
     }
 
-    public List<Asiento> getAsiento() {
-        return asiento;
+    public String[][] getAvion1() {
+        return avion1;
     }
 
-    public void setAsiento(List<Asiento> asiento) {
-        this.asiento = asiento;
+    public void setAvion1(String[][] avion1) {
+        this.avion1 = avion1;
     }
-    
+
+    public float getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(float precio) {
+        this.precio = precio;
+    }
+
+    public float getTotal() {
+        return total;
+    }
+
+    public void setTotal(float total) {
+        this.total = total;
+    }
+   
     
 }

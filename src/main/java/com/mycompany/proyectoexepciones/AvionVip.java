@@ -11,15 +11,11 @@ public class AvionVip extends Avion{
      * 
      */
     private String vip[][];
-    /**
-     * 
-     * @param asiento 
-     */
-    public AvionVip(List<Asiento> asiento) {
-        super(asiento);
-        this.vip = new String [2][3];
-    }
-    
+
+    public AvionVip(String[][] vip, String[][] avion1, float precio) {
+        super(avion1, precio);
+        this.vip = vip;
+    }  
     /**
      * 
      * @return 

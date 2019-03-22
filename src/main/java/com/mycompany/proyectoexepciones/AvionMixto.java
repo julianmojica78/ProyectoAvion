@@ -8,50 +8,37 @@ import java.util.List;
  */
 public class AvionMixto extends Avion{
     /**
-     * 
+     *
      */
     private String vip[][];
     /**
-     * 
+     *
      */
-    private String eco[][];
-    /**
-     * 
-     * @param asiento 
-     */
-    public AvionMixto(List<Asiento> asiento) {
-        super(asiento);
-        this.vip = new String [2][3];
-        this.eco = new String [6][6];
-    }
-    public void agregarMixto(){
+   
+    public AvionMixto(String[][] avion1,String[][] vip, float precio) {
+        super(avion1, precio);
+        this.vip = vip;
     }
     /**
-     * 
-     * @return 
+     *
+     * @param asiento
+     */
+    
+    
+    
+   
+    /**
+     *
+     * @return
      */
     public String[][] getVip() {
         return vip;
     }
     /**
-     * 
-     * @param vip 
+     *
+     * @param vip
      */
     public void setVip(String[][] vip) {
         this.vip = vip;
     }
-    /**
-     * 
-     * @return 
-     */
-    public String[][] getEco() {
-        return eco;
-    }
-    /**
-     * 
-     * @param eco 
-     */
-    public void setEco(String[][] eco) {
-        this.eco = eco;
-    }
-}
+}  

@@ -11,13 +11,10 @@ public class AvionEco extends Avion{
      * 
      */
     private String eco[][];
-    /**
-     * 
-     * @param asiento 
-     */
-    public AvionEco(List<Asiento> asiento) {
-        super(asiento);
-        this.eco = new String [2][3];
+
+    public AvionEco(String[][] eco, String[][] avion1, float precio) {
+        super(avion1, precio);
+        this.eco = eco;
     }
     /**
      * 
