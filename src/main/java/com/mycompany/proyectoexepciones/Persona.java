@@ -75,9 +75,7 @@ public class Persona {
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
-        public Date getFechaNac(){
-        return fechaNacimiento;
-    }   
+  
     
     
 }

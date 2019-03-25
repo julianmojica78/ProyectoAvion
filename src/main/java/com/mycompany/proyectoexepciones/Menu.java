@@ -3,16 +3,20 @@ package com.mycompany.proyectoexepciones;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
- *
+ * Clase Menu donde tenemos los atributos los menus y los metodos del proyecto
  * @author David
  */
 public class Menu {
     
     int bandera = 1;
-    
+    /**
+     * constructor para inicializar los metodos
+     */
     public Menu() {
         agregarVipMixto();
         agregarEcoMixto();
@@ -20,15 +24,26 @@ public class Menu {
         agregarVip();
         menuPrinipal(); 
     }
+    /**
+     * atributo global de avionMixto
+     */
         AvionMixto mix;
+    /**
+     * atributo global de avionVip
+     */
         AvionVip vip;
+    /**
+     * atributo global de AvionEco
+     */  
         AvionEco eco;
+     /**
+      * atributo para capturardatos de consola
+      */
         Scanner sn = new Scanner(System.in);
-                
-        public void menuPrinipal(){
-        
-      
-        
+    /**
+     * metodo donde tenemos el menu principal
+     */    
+    public void menuPrinipal(){
         int opcion = 0; //Guardaremos la opcion del usuario
  
         do{
@@ -36,7 +51,7 @@ public class Menu {
             System.out.println("1. Avion Mixto");
             System.out.println("2. Avion Economico");
             System.out.println("3. Avion Vip");
-            System.out.println("5. Salir");
+            System.out.println("4. Salir");
  
             try {            
                 opcion = sn.nextInt();
@@ -45,28 +60,28 @@ public class Menu {
                          menuMixto();
                         break;
                     case 2:
-                        menuVip();
-                        
+                         menuEco();                       
                         break;
                     case 3:
-                         menuEco();
-                        break;                        
+                         menuVip();
+                        break;           
                     case 4:
-                        break;
-                    case 5:
                         System.out.println("Salir...");
                         System.exit(opcion);
                         break;
                     default:
-                        System.out.println("Solo números entre 1 y 5");
+                        System.out.println("Solo números entre 1 y 4");
                 }
-            } catch(Exception e){
+            } catch(InputMismatchException e){
                 System.out.println("Debes insertar un número");
                 sn.next();
             } 
         }while(opcion != 5);  
     }
-        public void menuMixto(){
+     /**
+     * metodo donde tenemos el menu para el avion mixto
+     */ 
+    public void menuMixto(){
         int opcion = 0; //Guardaremos la opcion del usuario
  
         do{
@@ -80,7 +95,8 @@ public class Menu {
                 opcion = sn.nextInt();
                 switch (opcion) {
                     case 1:
-                        if(mix.bandera == 1){
+                        Logica log = new Logica ();
+                        if(log.bandera(mix.bandera)){
                         imprimirVipMix();
                         generarCompraVipMix();
                         }else{
@@ -93,6 +109,7 @@ public class Menu {
                         break;
                     case 3:
                         despegar(mix);
+                        calcularTotalVipMix();
                         break;
                     case 4:
                         menuPrinipal();
@@ -100,13 +117,16 @@ public class Menu {
                     default:
                         System.out.println("Solo números entre 1 y 4");
                 }
-            } catch(Exception e){
+            } catch(InputMismatchException e){
                 System.out.println("Debes insertar un número");
                 sn.next();
             } 
-        }while(opcion != 3);  
+        }while(opcion != 4);  
     }
-        public void menuVip(){
+    /**
+     * metodo donde tenemos el menu para el avion Vip
+     */ 
+    public void menuVip(){
         int opcion = 0; //Guardaremos la opcion del usuario
  
         do{
@@ -119,9 +139,10 @@ public class Menu {
                 opcion = sn.nextInt();
                 switch (opcion) {
                     case 1:
-                        if(vip.bandera == 1){
-                        imprimirVipMix();
-                        generarCompraVipMix();
+                        Logica log = new Logica();
+                        if(log.bandera(vip.bandera)){
+                            imprimirGeneral(vip);
+                            generarCompra(vip);
                         }else{
                             System.out.println("El avion no esta disponible en este momento!!");
                         }
@@ -129,35 +150,40 @@ public class Menu {
                     
                     case 2:
                         despegar(vip);
+                        calcularTotal(vip);
                         break;
                     case 3:
                         menuPrinipal();
                         break;
                     default:
-                        System.out.println("Solo números entre 1 y 4");
+                        System.out.println("Solo números entre 1 y 3");
                 }
-            } catch(Exception e){
+            } catch(InputMismatchException e){
                 System.out.println("Debes insertar un número");
                 sn.next();
             } 
         }while(opcion != 3);  
     }
-         public void menuEco(){
+     /**
+     * metodo donde tenemos el menu para el avion eonomico
+     */ 
+    public void menuEco(){
         int opcion = 0; //Guardaremos la opcion del usuario
  
         do{
             System.out.println("\nBienvenidos");
             System.out.println("1. Asientos Economicos");
-            System.out.println("3. Despegar Avion!!");
-            System.out.println("4. Volver");
+            System.out.println("2. Despegar Avion!!");
+            System.out.println("3. Volver");
  
             try {            
                 opcion = sn.nextInt();
                 switch (opcion) {
                     case 1:
-                        if(eco.bandera == 1){
-                        imprimirVipMix();
-                        generarCompraVipMix();
+                        Logica log = new Logica ();
+                        if(log.bandera(eco.bandera)){
+                            imprimirGeneral(eco);
+                            generarCompra(eco);
                         }else{
                             System.out.println("El avion no esta disponible en este momento!!");
                         }
@@ -165,29 +191,25 @@ public class Menu {
                     
                     case 2:
                         despegar(eco);
+                         calcularTotal(eco);
                         break;
                     case 3:
                         menuPrinipal();
                         break;
                     default:
-                        System.out.println("Solo números entre 1 y 4");
+                        System.out.println("Solo números entre 1 y 3");
                 }
-            } catch(Exception e){
+            } catch(InputMismatchException e){
                 System.out.println("Debes insertar un número");
                 sn.next();
             } 
         }while(opcion != 3);  
     }
-         public void agregarVipMixto(){
-           mix = new AvionMixto(new String [1][1],new String[2][2],100);
-           mix.bandera=1;
-            for(int i=0;i<mix.getVip().length;i++ ){
-            for(int j=0;j<mix.getVip()[i].length;j++){
-                mix.getVip()[i][j]="0";
-            }
-        }      
-    }
-    
+    /**
+     * metodo que nos genera el despegar desde una bandera
+     * @param avion
+     * @return avion
+     */
     public Avion despegar(Avion avion){
         if(avion.bandera ==1){
             avion.bandera = -1;
@@ -198,6 +220,21 @@ public class Menu {
         
         return avion;
     }
+    /**
+     * metodo para generar la matriz de los asientos vip del avion mixto
+     */ 
+    public void agregarVipMixto(){
+           mix = new AvionMixto(new String [3][4],new String[5][6],100,200);
+           mix.bandera=1;
+            for(int i=0;i<mix.getVip().length;i++ ){
+            for(int j=0;j<mix.getVip()[i].length;j++){
+                mix.getVip()[i][j]="0";
+            }
+        }      
+    }
+     /**
+     * metodo para generar la matriz de los asientos economicos del avion mixto
+     */ 
     public void agregarEcoMixto(){
    
         for(int i=0;i<mix.avion1.length;i++ ){
@@ -207,17 +244,23 @@ public class Menu {
         }
      
     }
+    /**
+     * metodo para generar la matriz del avion economico
+     */ 
     public void agregarEconomico(){
-     eco = new AvionEco(new String [1][1],new String[2][2],100);
+     eco = new AvionEco(new String [1][1],new String[3][3],100);
      eco.bandera=1;
         for(int i=0;i<eco.avion1.length;i++ ){
             for(int j=0;j<eco.avion1[i].length;j++){
                 eco.avion1[i][j]="0";
             }
-        }        
+        }
     }
-     public void agregarVip(){
-     vip = new AvionVip(new String [1][1],new String[2][2],100);
+    /**
+     * metodo para generar la matriz del avion vip
+     */ 
+    public void agregarVip(){
+     vip = new AvionVip(new String [1][1],new String[5][6],200);
      vip.bandera=1;
         for(int i=0;i<vip.avion1.length;i++ ){
             for(int j=0;j<vip.avion1[i].length;j++){
@@ -225,16 +268,29 @@ public class Menu {
             }
         }        
     }
-     
-     public void imprimirVipMix(){
-      System.out.println("Asientos VIP \n");
+    /**
+     * metodo para imprimir la matriz de los asientos vip del avion mix
+     */
+    public void imprimirVipMix(){
+         System.out.println("Asientos VIP  \n");
+         for(int i=0; i<mix.getVip().length;i++){
+             System.out.print("  "+(i+1)+" ");
+         }
         for(int i=0;i<mix.getVip().length;i++ ){
+            System.out.println();
+            System.out.print((i+1)+" ");
             for(int j=0;j<mix.getVip()[i].length;j++){
-            System.out.print(mix.getVip()[i][j]);
+            System.out.print(mix.getVip()[i][j]+"   ");
             }
         }
      }
-     public void imprimirGeneral(Avion avion){
+    /**
+     * metodo para imprimir la matriz de los asientos de los aviones
+     */
+    public void imprimirGeneral(Avion avion){
+        String length =String.valueOf(avion.avion1.length);
+        //String contenedor[] = new String[length];
+        
          System.out.println("Asientos   \n");
          for(int i=0; i<avion.avion1.length;i++){
              System.out.print("  "+(i+1)+" ");
@@ -243,85 +299,149 @@ public class Menu {
             System.out.println();
             System.out.print((i+1)+" ");
             for(int j=0;j<avion.avion1[i].length;j++){
-            System.out.print(avion.avion1[i][j]);
+            //contenedor[i][j] = avion.avion1[i][j]+1;
+            System.out.print(avion.avion1[i][j]+"   ");
             }
         }
      }
-     
-     public void generarCompra(Avion avion2){
+    /**
+     * metodo para generar la compra de los aviones
+     * @param avion2 
+     */
+    public void generarCompra(Avion avion2){
         try{
+         Logica logica1 = new Logica();
          System.out.println("\nIngreser  la fila del asiento a reservar");
          int fila = sn.nextInt();
-         System.out.println("\nIngreser  la columna del asiento a reservar");
-         int columna = sn.nextInt();
-        
-         for(int i = 0;i < avion2.avion1.length;i++){
-             if(i == fila-1){
-                    for(int j=0;j<avion2.avion1[i].length;j++){
-                        if(j == columna-1){
-                            if(avion2.avion1[i][j] == "0"){
-                               avion2.avion1[i][j] = "x";
-                               imprimirGeneral(avion2);
-                             
-                            } 
-                        }
-                      }                
+         for(int k = 0;k < avion2.avion1.length;k++){
+             if(logica1.compararFila(avion2.avion1.length, fila)){
+                          System.out.println("Ingreser  la columna del asiento a reservar");
+                          int columna = sn.nextInt();
+            for(int l=0;l<avion2.avion1[k].length;l++){
+                if(logica1.compararFila(avion2.avion1[k].length , columna)){
+                                System.out.println("Ingrese Nombre de la Persona");
+                                String nombre = sn.next();
+                                System.out.println("Ingrese Identificacion ");
+                                int identificacion = sn.nextInt();
+                                System.out.println("Ingrese Fecha de Nacimiento (DD/MM/YYY)");
+                                String fech = sn.next();
+                                Date fecha = logica1.fecha(fech);
+                                Persona persona1 = new Persona(identificacion, nombre, fecha);
+
+                                for(int i = 0;i < avion2.avion1.length;i++){
+                                    if(i == fila-1){
+                                           for(int j=0;j<avion2.avion1[i].length;j++){
+                                                   if(j == columna-1){
+                                                   if(avion2.avion1[i][j] == "0"){
+                                                      avion2.avion1[i][j] = "x";                             
+                                                   } 
+                                               }   
+                                             }                
+                                    }
+                                }
+                System.out.println("Reserva Creada Correctamente");
+                }
+                else{
+                    System.out.println("Numero de columna no existe");
+                    generarCompra(avion2);
+                }
+            break;
+            }
+            }else{
+                    System.out.println("Numero de fila no existe");
+                    generarCompra(avion2);
              }
+            break;
          }
-          }
-          catch(Exception e){
-              System.out.println("Digite un dato valido");
+         }
+             catch(InputMismatchException e){
+             System.out.println("Digite un dato valido");
               sn = new Scanner (System.in);
               generarCompra(avion2);
           }
      }
- public void generarCompraVipMix(){
+    /**
+     * metodo para generar la compra de los asientos Vip del avion mixto
+     * @param avion2 
+     */
+    public void generarCompraVipMix(){
         try{
+         Logica logica1 = new Logica();
          System.out.println("\nIngreser  la fila del asiento a reservar");
          int fila = sn.nextInt();
-         System.out.println("Ingreser  la columna del asiento a reservar");
-         int columna = sn.nextInt();
-         System.out.println("Ingrese Nombre de la Persona");
-         String nombre = sn.next();
-         System.out.println("Ingrese Identificacion ");
-         int identificacion = sn.nextInt();
-         System.out.println("Ingrese Fecha de Nacimiento (DD/MM/YYY)");
-         String fech = sn.next();
-         Date fecha = fecha(fech);
-         for(int i = 0;i<mix.getVip().length;i++){
-             if(i == fila-1){
-                    for(int j=0;j<mix.getVip()[i].length;j++){
-                        if(j == columna-1){
-                            if(mix.getVip()[i][j] == "0"){
-                               mix.getVip()[i][j] = "1";
-                            
-                            } 
-                        }
-                      }                
+         for(int k = 0;k <mix.getVip().length;k++){
+             if(mix.getVip().length > fila-1){
+                          System.out.println("Ingreser  la columna del asiento a reservar");
+                          int columna = sn.nextInt();
+            for(int l=0;l<mix.getVip()[k].length;l++){
+                if(mix.getVip()[k].length > columna-1){
+                                System.out.println("Ingrese Nombre de la Persona");
+                                String nombre = sn.next();
+                                System.out.println("Ingrese Identificacion ");
+                                int identificacion = sn.nextInt();
+                                System.out.println("Ingrese Fecha de Nacimiento (DD/MM/YYY)");
+                                String fech = sn.next();
+                                Date fecha = logica1.fecha(fech);
+                                Persona persona1 = new Persona(identificacion, nombre, fecha);
+                                for(int i = 0;i<mix.getVip().length;i++){
+                                    if(i == fila-1){
+                                           for(int j=0;j<mix.getVip()[i].length;j++){
+                                               if(j == columna-1){
+                                                   if(mix.getVip()[i][j] == "0"){
+                                                      mix.getVip()[i][j] = "x";
+                                                   } 
+                                               }
+                                             }                
+                                       }
+                                }
+                System.out.println("Reserva Creada Correctamente");
+                }
+                else{
+                    System.out.println("Numero de columna no existe");
+                    generarCompraVipMix();
+                }
+            break;
+            }
+            }else{
+                    System.out.println("Numero de fila no existe");
+                    generarCompraVipMix();
              }
+            break;
          }
-         
-          }
-          catch(Exception e){
-              System.out.println("Digite un dato valido");
+         }
+             catch(InputMismatchException e){
+             System.out.println("Digite un dato valido");
               sn = new Scanner (System.in);
-              generarCompra(mix);
+              generarCompraVipMix();
           }
      }
-    public void calculartotal(Avion avion2){
-        avion2.total = avion2.total + avion2.precio ;
-        System.out.println("precio Total: "+avion2.total);
+    /**
+     * metodo para calcular el precio total del avion 
+     */
+    public void calcularTotalVipMix(){
+        Logica logica1 = new Logica();
+            for(int i = 0;i<mix.getVip().length;i++){
+                        for(int j=0;j<mix.getVip()[i].length;j++){
+                                if(logica1.calcularTotalVip(mix.getVip()[i][j])){
+                                mix.total = mix.precio + mix.total +mix.getPrecioVip() ;                            
+                                } 
+                          }
+             }
+            System.out.println("precio Total: "+mix.total);
 
         }
-   public Date fecha(String fech){
-       SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/mm/yyyy");
-       Date fecha = null;
-       try {
-           fecha = formatoDelTexto.parse(fech);
-       }catch (ParseException ex){
-       System.out.println("\n fecha incorrecta  debe de llevar el formato valido por favor ");
-       
-       }return fecha;
-   }    
+     /**
+     * metodo para calcular el precio total del avion mixto
+     */
+    public void calcularTotal(Avion avion2){
+         for(int i = 0;i < avion2.avion1.length;i++){
+                    for(int j=0;j<avion2.avion1[i].length;j++){
+                            if(avion2.avion1[i][j] == "x"){
+                                avion2.total= avion2.precio + avion2.total;
+                            } 
+                    }    
+         }
+        System.out.println("precio Total: "+avion2.total);
+        }
 }
 
